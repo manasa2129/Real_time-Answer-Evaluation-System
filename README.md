@@ -37,3 +37,16 @@ This system simplifies the traditional manual evaluation process by integrating 
 3. **Evaluation results** are displayed instantly via AJAX-based updates.
 4. **Educators can review** and override feedback through the dashboard.
 5. Final feedback is stored and accessible to both parties.
+
+## 📌 Future Improvements
+
+- Role-based login authentication
+- PDF and handwriting recognition (OCR)
+- Detailed topic-wise feedback
+- Educator performance analytics
+
+## 📄 License
+
+This project is for educational and research purposes.
+
+---
