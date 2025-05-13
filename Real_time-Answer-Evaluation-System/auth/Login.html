@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="icon" href="../Icon.jpg" type="image/x-icon">
+    <style>
+        body {
+            background-image: url(https://informationage-production.s3.amazonaws.com/uploads/2023/03/ChatGPT-future-of-AI-scaled.jpg);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            height: 100vh;
+            padding: 20px;
+            position: relative;
+            margin: 0;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        /* Form container styling */
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.form-container:hover {
+    transform: scale(1.02);
+}
+
+        .form-container.hidden {
+            display: none;
+        }
+        .d-none {
+            display: none !important;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .password-container {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 70%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+        }
+        .btn-login {
+            width: 100%;
+            background: #333;
+            color: white;
+            border-radius: 5px;
+        }
+        .btn-login:hover {
+            background: #555;
+        }
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div id="login-form" class="form-container">
+        <h3 class="text-center mb-4">
+            <a href="../Front.html"><img src="../Icon.jpg" style="height: 40px; width: 35px; padding-right: 10px;"></a>
+            ACCOUNT LOGIN
+        </h3>
+        <form id="login-form-element" action="login.php" method="POST">
+            <div class="mb-3">
+                <label class="form-label">USERNAME</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+                <div class="invalid-feedback">Username is required.</div>
+            </div>
+            <div class="mb-3 password-container">
+                <label class="form-label">PASSWORD</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                <i class="bi bi-eye-slash toggle-password" onclick="togglePassword('password', this)"></i>
+                <div class="invalid-feedback">Password is required.</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-control" id="login-role" name="role" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="student">Student</option>
+                    <option value="educator">Educator</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <div class="invalid-feedback">Please select a role.</div>
+            </div>
+            <div class="d-flex justify-content-between mb-4">
+                <a href="#" class="text-decoration-none" id="toggle-signup">No Account? Sign Up</a>
+            </div>
+            <button type="submit" class="btn btn-login">Login</button>
+        </form>
+    </div>
+
+    <!-- Sign-Up Form -->
+    <div id="signup-form" class="form-container d-none">
+        <h3 class="text-center mb-4">
+            <a href="../Front.html"><img src="../Icon.jpg" style="height: 40px; width: 35px; padding-right: 10px;"></a>
+        CREATE ACCOUNT
+        </h3>
+        <form id="signup-form-element" action="signup.php" method="POST">
+            <div class="mb-3">
+                <label class="form-label">USERNAME</label>
+                <input type="text" id="signup-username" name="username" class="form-control" placeholder="Choose a username" required>
+                <div class="invalid-feedback">Username is required.</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">EMAIL</label>
+                <input type="email" id="signup-email" name="email" class="form-control" placeholder="Enter your email" required>
+                <div class="invalid-feedback">Valid email is required.</div>
+            </div>
+            <div class="mb-3 password-container">
+                <label class="form-label">PASSWORD</label>
+                <input type="password" id="signup-password" name="password" class="form-control" placeholder="Create a password" required>
+                <i class="bi bi-eye-slash toggle-password" onclick="togglePassword('signup-password', this)"></i>
+                <div class="invalid-feedback">Password is required.</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-control" id="user-role" name="role" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="student">Student</option>
+                    <option value="educator">Educator</option>
+                </select>
+                <div class="invalid-feedback">Please select a role.</div>
+            </div>
+            <div class="d-flex justify-content-between mb-4">
+                <a href="#login-form" class="text-decoration-none" id="toggle-login">Back to Login</a>
+            </div>
+            <button type="submit" class="btn btn-login">Sign Up</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to toggle password visibility
+        function togglePassword(inputId, icon) {
+            const passwordField = document.getElementById(inputId);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            }
+        }
+
+        // Toggle between Login and Sign-Up forms
+        document.getElementById("toggle-signup").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.getElementById("login-form").classList.add("d-none");
+            document.getElementById("signup-form").classList.remove("d-none");
+        });
+
+        document.getElementById("toggle-login").addEventListener("click", function (e) {
+            e.preventDefault();
+            document.getElementById("signup-form").classList.add("d-none");
+            document.getElementById("login-form").classList.remove("d-none");
+        });
+
+        // Form validation for login
+        document.getElementById("login-form-element").addEventListener("submit", function (e) {
+            let valid = true;
+            const username = document.getElementById("username");
+            const password = document.getElementById("password");
+            const role = document.getElementById("login-role");
+
+            if (username.value.trim() === "") {
+                username.classList.add("is-invalid");
+                valid = false;
+            } else {
+                username.classList.remove("is-invalid");
+            }
+
+            if (password.value.trim() === "") {
+                password.classList.add("is-invalid");
+                valid = false;
+            } else {
+                password.classList.remove("is-invalid");
+            }
+
+            if (!role.value) {
+                role.classList.add("is-invalid");
+                valid = false;
+            } else {
+                role.classList.remove("is-invalid");
+            }
+
+            if (!valid) {
+                e.preventDefault(); // Prevent form submission if invalid
+            }
+        });
+
+        // Form validation for signup
+        document.getElementById("signup-form-element").addEventListener("submit", function (e) {
+            let valid = true;
+            const username = document.getElementById("signup-username");
+            const email = document.getElementById("signup-email");
+            const password = document.getElementById("signup-password");
+            const role = document.getElementById("user-role");
+
+            if (username.value.trim() === "") {
+                username.classList.add("is-invalid");
+                valid = false;
+            } else {
+                username.classList.remove("is-invalid");
+            }
+
+            if (!validateEmail(email.value.trim())) {
+                email.classList.add("is-invalid");
+                valid = false;
+            } else {
+                email.classList.remove("is-invalid");
+            }
+
+            if (password.value.trim() === "") {
+                password.classList.add("is-invalid");
+                valid = false;
+            } else {
+                password.classList.remove("is-invalid");
+            }
+
+            if (!role.value) {
+                role.classList.add("is-invalid");
+                valid = false;
+            } else {
+                role.classList.remove("is-invalid");
+            }
+
+            if (!valid) {
+                e.preventDefault(); // Prevent form submission if invalid
+            }
+        });
+
+        // Email validation function
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+    </script>
+</body>
+</html>

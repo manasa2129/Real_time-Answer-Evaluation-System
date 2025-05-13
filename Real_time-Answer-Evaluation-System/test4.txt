@@ -1,0 +1,1 @@
+A robot may simultaneously monitor conveyor belts while performing quality.
